@@ -1,3 +1,26 @@
-<div class="flex justify-center">
-  <p class="text-2xl font-bold">airplane-overview works!</p>
+<div>
+  <table mat-table [dataSource]="airplaneDataSource">
+    <mat-text-column name="id" headerText="ID"></mat-text-column>
+    <mat-text-column name="brand" headerText="Marke"></mat-text-column>
+    <mat-text-column name="model" headerText="Modell"></mat-text-column>
+    <mat-text-column
+      name="constructionYear"
+      headerText="Baujahr"
+    ></mat-text-column>
+    <mat-text-column
+      name="airline"
+      headerText="Fluggesellschaft"
+    ></mat-text-column>
+    <mat-text-column
+      name="seatCapacity"
+      headerText="Sitzplätze"
+    ></mat-text-column>
+    <mat-text-column
+      name="createdBy"
+      headerText="Erstellt von"
+    ></mat-text-column>
+
+    <tr *matHeaderRowDef="columns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: columns" mat-row></tr>
+  </table>
 </div>

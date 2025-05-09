@@ -44,17 +44,17 @@ export class LoginComponent {
     }
   }
 
-  public login() {
+  login() {
     this.authService.login();
     this.checkState();
   }
 
-  public logout() {
+  logout() {
     this.authService.logout();
     this.checkState();
   }
 
-  public isAuthenticated(): boolean {
+  isAuthenticated(): boolean {
     return this.authService.isAuthenticated();
   }
 }
