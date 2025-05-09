@@ -18,7 +18,7 @@ export class AppComponent {
       {
         label: 'Home',
         icon: 'pi pi-home',
-        routerLink: '',
+        routerLink: '/',
       },
       {
         label: 'Management',
@@ -37,7 +37,7 @@ export class AppComponent {
           {
             label: 'Airplanes',
             icon: 'pi pi-send',
-            routerLink: '',
+            routerLink: '/airplanes',
           },
           {
             label: 'Flights',
