@@ -20,6 +20,32 @@ export class AppComponent {
         icon: 'pi pi-home',
         routerLink: '',
       },
+      {
+        label: 'Management',
+        icon: 'pi pi-sliders-h',
+        items: [
+          {
+            label: 'Passengers',
+            icon: 'pi pi-id-card',
+            routerLink: '',
+          },
+          {
+            label: 'Bookings',
+            icon: 'pi pi-calendar',
+            routerLink: '',
+          },
+          {
+            label: 'Airplanes',
+            icon: 'pi pi-send',
+            routerLink: '',
+          },
+          {
+            label: 'Flights',
+            icon: 'pi pi-globe',
+            routerLink: '',
+          },
+        ],
+      },
     ];
   }
 }

@@ -1,0 +1,19 @@
+<button
+  class="cursor-pointer transition-all duration-300 hover:scale-105"
+  (click)="onClick()"
+>
+  <p-card
+    [header]="taskTitle"
+    [style]="{
+      width: '20rem',
+      height: '13rem',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    }"
+  >
+    <div class="flex justify-center">
+      <i [class]="iconClass"></i>
+    </div>
+  </p-card>
+</button>
