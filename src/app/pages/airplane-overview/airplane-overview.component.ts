@@ -1,27 +1,19 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AirplaneService } from '../../service/airplane.service';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { TableModule } from 'primeng/table';
 import { Airplane } from '../../data/airplane';
-import { CommonModule } from '@angular/common';
+import { AirplaneService } from '../../service/airplane.service';
 
 @Component({
   selector: 'app-airplane-overview',
-  imports: [MatTableModule, CommonModule],
+  imports: [TableModule, CardModule, ButtonModule],
   templateUrl: './airplane-overview.component.html',
   styleUrl: './airplane-overview.component.css',
 })
 export class AirplaneOverviewComponent {
-  public airplaneDataSource = new MatTableDataSource<Airplane>();
-  public columns = [
-    'id',
-    'brand',
-    'model',
-    'constructionYear',
-    'airline',
-    'seatCapacity',
-    'createdBy',
-  ];
+  airplaneData: Airplane[] = [];
 
   constructor(private service: AirplaneService, private router: Router) {}
 
@@ -33,7 +25,29 @@ export class AirplaneOverviewComponent {
     this.service.getAllAirplanes().subscribe((obj) => {
       console.log(obj);
 
-      this.airplaneDataSource.data = obj;
+      this.airplaneData = obj;
+    });
+  }
+
+  editAirplane(airplane: Airplane) {
+    alert(
+      'Edit airplane: \n' +
+        airplane.id +
+        ', ' +
+        airplane.brand +
+        ' ' +
+        airplane.model
+    );
+  }
+
+  addAirplane() {
+    alert('Add airplane');
+  }
+
+  deleteAirplane(airplane: Airplane) {
+    this.service.deleteAirplane(airplane.id).subscribe((obj) => {
+      console.log(obj);
+      this.loadAirplanes();
     });
   }
 }

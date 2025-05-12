@@ -1,26 +1,49 @@
-<div>
-  <table mat-table [dataSource]="airplaneDataSource">
-    <mat-text-column name="id" headerText="ID"></mat-text-column>
-    <mat-text-column name="brand" headerText="Marke"></mat-text-column>
-    <mat-text-column name="model" headerText="Modell"></mat-text-column>
-    <mat-text-column
-      name="constructionYear"
-      headerText="Baujahr"
-    ></mat-text-column>
-    <mat-text-column
-      name="airline"
-      headerText="Fluggesellschaft"
-    ></mat-text-column>
-    <mat-text-column
-      name="seatCapacity"
-      headerText="Sitzplätze"
-    ></mat-text-column>
-    <mat-text-column
-      name="createdBy"
-      headerText="Erstellt von"
-    ></mat-text-column>
-
-    <tr *matHeaderRowDef="columns" mat-header-row></tr>
-    <tr *matRowDef="let row; columns: columns" mat-row></tr>
-  </table>
+<div class="flex justify-center">
+  <p-card>
+    <p-button
+      label="Add Airplane"
+      icon="pi pi-plus"
+      severity="secondary"
+      (onClick)="addAirplane()"
+    />
+    <p-table [value]="airplaneData">
+      <ng-template #header>
+        <tr>
+          <th>ID</th>
+          <th>Brand</th>
+          <th>Model</th>
+          <th>Construction Year</th>
+          <th>Airline</th>
+          <th>Seat Capacity</th>
+          <th>Created By</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-airplane>
+        <tr>
+          <td>{{ airplane.id }}</td>
+          <td>{{ airplane.brand }}</td>
+          <td>{{ airplane.model }}</td>
+          <td>{{ airplane.constructionYear }}</td>
+          <td>{{ airplane.airline }}</td>
+          <td>{{ airplane.seatCapacity }}</td>
+          <td>{{ airplane.createdBy }}</td>
+          <td class="flex gap-2">
+            <p-button
+              icon="pi pi-pen-to-square"
+              severity="secondary"
+              [rounded]="true"
+              (onClick)="editAirplane(airplane)"
+            />
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              [rounded]="true"
+              (onClick)="deleteAirplane(airplane)"
+            />
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
 </div>
