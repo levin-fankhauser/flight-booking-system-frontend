@@ -22,5 +22,11 @@ export const routes: Routes = [
     canActivate: [appCanActivate],
     data: { roles: [AppRoles.Admin] },
   },
+  {
+    path: 'airplane/:id',
+    component: AirplaneDetailComponent,
+    canActivate: [appCanActivate],
+    data: { roles: [AppRoles.Admin] },
+  },
   { path: 'noaccess', component: NoAccessComponent },
 ];

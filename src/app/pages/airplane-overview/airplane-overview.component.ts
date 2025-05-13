@@ -29,15 +29,8 @@ export class AirplaneOverviewComponent {
     });
   }
 
-  editAirplane(airplane: Airplane) {
-    alert(
-      'Edit airplane: \n' +
-        airplane.id +
-        ', ' +
-        airplane.brand +
-        ' ' +
-        airplane.model
-    );
+  async editAirplane(airplane: Airplane) {
+    await this.router.navigate(['airplane', airplane.id]);
   }
 
   async addAirplane() {

@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
+  UntypedFormBuilder,
   UntypedFormControl,
   UntypedFormGroup,
 } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatFormField, MatHint, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { Airplane } from '../../data/airplane';
@@ -36,7 +37,8 @@ import { ToastModule } from 'primeng/toast';
 })
 export class AirplaneDetailComponent {
   airplane: Airplane | undefined;
-  title: string = 'Create new Airplane';
+  title: string = 'Create Airplane';
+  buttonLabel: string = 'Create';
 
   public objForm = new UntypedFormGroup({
     brand: new UntypedFormControl(''),
@@ -50,8 +52,25 @@ export class AirplaneDetailComponent {
   constructor(
     private router: Router,
     private service: AirplaneService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private route: ActivatedRoute,
+    private formBuilder: UntypedFormBuilder
   ) {}
+
+  ngOnInit() {
+    if (this.route.snapshot.paramMap.get('id')) {
+      const id = Number.parseInt(
+        this.route.snapshot.paramMap.get('id') as string
+      );
+
+      this.service.getAirplane(id).subscribe((obj) => {
+        this.airplane = obj;
+        this.objForm = this.formBuilder.group(obj);
+        this.title = 'Edit Airplane';
+        this.buttonLabel = 'Update';
+      });
+    }
+  }
 
   async back() {
     await this.router.navigate(['airplanes']);
@@ -61,24 +80,45 @@ export class AirplaneDetailComponent {
     this.airplane = Object.assign(formData);
 
     if (this.airplane) {
-      this.service.saveAirplane(this.airplane).subscribe({
-        next: (data) => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Airplane saved successfully',
-          });
-          this.router.navigate(['airplanes']);
-        },
-        error: (error) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Failed to save airplane',
-          });
-          console.error('Error saving airplane:', error);
-        },
-      });
+      if (this.airplane.id) {
+        this.service.updateAirplane(this.airplane).subscribe({
+          next: (data) => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Airplane updated successfully',
+            });
+            this.router.navigate(['airplanes']);
+          },
+          error: (error) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Failed to update airplane',
+            });
+            console.error('Error updating airplane:', error);
+          },
+        });
+      } else {
+        this.service.saveAirplane(this.airplane).subscribe({
+          next: (data) => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Airplane saved successfully',
+            });
+            this.router.navigate(['airplanes']);
+          },
+          error: (error) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Failed to save airplane',
+            });
+            console.error('Error saving airplane:', error);
+          },
+        });
+      }
     }
   }
 }
