@@ -40,8 +40,8 @@ export class AirplaneOverviewComponent {
     );
   }
 
-  addAirplane() {
-    alert('Add airplane');
+  async addAirplane() {
+    await this.router.navigate(['airplane']);
   }
 
   deleteAirplane(airplane: Airplane) {

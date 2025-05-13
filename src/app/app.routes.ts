@@ -4,6 +4,7 @@ import { AirplaneOverviewComponent } from './pages/airplane-overview/airplane-ov
 import { NoAccessComponent } from './pages/no-access/no-access.component';
 import { appCanActivate } from './guard/app.auth.guard';
 import { AppRoles } from './app.roles';
+import { AirplaneDetailComponent } from './pages/airplane-detail/airplane-detail.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -12,9 +13,14 @@ export const routes: Routes = [
     component: AirplaneOverviewComponent,
     canActivate: [appCanActivate],
     data: {
-      roles: [AppRoles.User],
-      pagetitle: 'Alle Spiele',
+      roles: [AppRoles.Admin],
     },
+  },
+  {
+    path: 'airplane',
+    component: AirplaneDetailComponent,
+    canActivate: [appCanActivate],
+    data: { roles: [AppRoles.Admin] },
   },
   { path: 'noaccess', component: NoAccessComponent },
 ];
