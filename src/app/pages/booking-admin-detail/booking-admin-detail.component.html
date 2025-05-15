@@ -173,6 +173,20 @@
             ></mat-timepicker-toggle>
           </mat-form-field>
         </div>
+        <mat-form-field>
+          <mat-label>Created By</mat-label>
+          <input
+            #inputCreatedBy
+            formControlName="createdBy"
+            matInput
+            maxlength="255"
+            type="text"
+            required
+          />
+          <mat-hint align="end"
+            >{{ inputCreatedBy.value.length || 0 }}/255</mat-hint
+          >
+        </mat-form-field>
         <div class="flex justify-end">
           <button
             [disabled]="!objForm.valid"

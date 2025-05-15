@@ -14,6 +14,7 @@ import { BookingDetailComponent } from './pages/booking-detail/booking-detail.co
 import { PassengerAdminOverviewComponent } from './pages/passenger-admin-overview/passenger-admin-overview.component';
 import { PassengerAdminDetailComponent } from './pages/passenger-admin-detail/passenger-admin-detail.component';
 import { BookingAdminOverviewComponent } from './pages/booking-admin-overview/booking-admin-overview.component';
+import { BookingAdminDetailComponent } from './pages/booking-admin-detail/booking-admin-detail.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -106,6 +107,8 @@ export const routes: Routes = [
       { path: 'passenger', component: PassengerAdminDetailComponent },
       { path: 'passenger/:id', component: PassengerAdminDetailComponent },
       { path: 'bookings', component: BookingAdminOverviewComponent },
+      { path: 'booking', component: BookingAdminDetailComponent },
+      { path: 'booking/:id', component: BookingAdminDetailComponent },
     ],
   },
   { path: 'noaccess', component: NoAccessComponent },
