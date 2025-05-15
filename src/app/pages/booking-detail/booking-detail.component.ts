@@ -156,8 +156,6 @@ export class BookingDetailComponent implements OnInit {
       bookingDate: this.toLocalIsoString(bookingDateTime),
     };
 
-    console.log('Booking:', this.booking);
-
     if (this.booking) {
       if (this.booking.id) {
         this.service.updateBooking(this.booking).subscribe({
