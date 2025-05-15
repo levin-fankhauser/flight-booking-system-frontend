@@ -1,43 +1,56 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthConfig, OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
-import { BehaviorSubject, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppAuthService {
   private jwtHelper: JwtHelperService = new JwtHelperService();
-  private usernameSubject: BehaviorSubject<string> =
-    new BehaviorSubject<string>('');
-  public readonly usernameObservable: Observable<string> =
-    this.usernameSubject.asObservable();
-  private useraliasSubject: BehaviorSubject<string> =
-    new BehaviorSubject<string>('');
-  public readonly useraliasObservable: Observable<string> =
-    this.useraliasSubject.asObservable();
-  private accessTokenSubject: BehaviorSubject<string> =
-    new BehaviorSubject<string>('');
-  public readonly accessTokenObservable: Observable<string> =
+
+  private usernameSubject = new BehaviorSubject<string>('');
+  public readonly usernameObservable = this.usernameSubject.asObservable();
+
+  private useraliasSubject = new BehaviorSubject<string>('');
+  public readonly useraliasObservable = this.useraliasSubject.asObservable();
+
+  private accessTokenSubject = new BehaviorSubject<string>('');
+  public readonly accessTokenObservable =
     this.accessTokenSubject.asObservable();
+
+  private rolesSubject = new BehaviorSubject<string[]>([]);
+  public readonly rolesObservable = this.rolesSubject.asObservable();
+
+  private _decodedAccessToken: any;
+  get decodedAccessToken() {
+    return this._decodedAccessToken;
+  }
+
+  private _accessToken = '';
+  get accessToken() {
+    return this._accessToken;
+  }
 
   constructor(
     private oauthService: OAuthService,
     private authConfig: AuthConfig
   ) {
     this.handleEvents(null);
-  }
 
-  private _decodedAccessToken: any;
+    this.accessTokenObservable.subscribe((token) => {
+      const decoded = this.jwtHelper.decodeToken(token);
+      const rolesRaw =
+        decoded?.resource_access?.['flight-booking-system']?.roles;
 
-  get decodedAccessToken() {
-    return this._decodedAccessToken;
-  }
+      const roles = Array.isArray(rolesRaw)
+        ? rolesRaw.map((r: string) => r.replace('ROLE_', ''))
+        : rolesRaw
+        ? [rolesRaw.replace('ROLE_', '')]
+        : [];
 
-  private _accessToken = '';
-
-  get accessToken() {
-    return this._accessToken;
+      this.rolesSubject.next(roles);
+    });
   }
 
   async initAuth(): Promise<any> {
@@ -50,33 +63,7 @@ export class AppAuthService {
   }
 
   public getRoles(): Observable<string[]> {
-    if (this._decodedAccessToken !== null) {
-      return new Observable<string[]>((observer) => {
-        if (
-          this._decodedAccessToken.resource_access['flight-booking-system']
-            .roles
-        ) {
-          if (
-            Array.isArray(
-              this._decodedAccessToken.resource_access['flight-booking-system']
-                .roles
-            )
-          ) {
-            const resultArr = this._decodedAccessToken.resource_access[
-              'flight-booking-system'
-            ].roles.map((r: string) => r.replace('ROLE_', ''));
-            observer.next(resultArr);
-          } else {
-            observer.next([
-              this._decodedAccessToken.resource_access[
-                'flight-booking-system'
-              ].roles.replace('ROLE_', ''),
-            ]);
-          }
-        }
-      });
-    }
-    return of([]);
+    return this.rolesObservable;
   }
 
   public getIdentityClaims(): Record<string, any> {
@@ -95,6 +82,7 @@ export class AppAuthService {
     this.oauthService.logOut();
     this.useraliasSubject.next('');
     this.usernameSubject.next('');
+    this.rolesSubject.next([]);
   }
 
   public login() {
