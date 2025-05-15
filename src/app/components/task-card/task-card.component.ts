@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
 
@@ -8,12 +8,12 @@ import { CardModule } from 'primeng/card';
   templateUrl: './task-card.component.html',
   styleUrl: './task-card.component.css',
 })
-export class TaskCardComponent {
+export class TaskCardComponent implements OnInit {
   @Input({ required: true }) taskTitle!: string;
   @Input({ required: true }) taskIcon!: string;
   @Input({ required: true }) route!: string;
 
-  iconClass: string = 'pi text-9xl';
+  iconClass = 'pi text-9xl';
 
   constructor(private router: Router) {}
 

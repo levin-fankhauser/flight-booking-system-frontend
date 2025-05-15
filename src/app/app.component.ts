@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ThemeSettingsComponent } from './components/theme-settings/theme-settings.component';
 import { Menubar } from 'primeng/menubar';
@@ -11,7 +11,7 @@ import { LoginComponent } from './components/login/login.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   items: MenuItem[] | undefined;
 
   ngOnInit() {

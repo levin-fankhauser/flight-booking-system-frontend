@@ -8,7 +8,7 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './theme-settings.component.css',
 })
 export class ThemeSettingsComponent {
-  icon: string = 'pi pi-moon';
+  icon = 'pi pi-moon';
 
   toggleDarkMode() {
     const element = document.querySelector('html');

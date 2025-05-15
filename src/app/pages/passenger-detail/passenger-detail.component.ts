@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -35,10 +35,10 @@ import { PassengerService } from '../../service/passenger.service';
   templateUrl: './passenger-detail.component.html',
   styleUrl: './passenger-detail.component.css',
 })
-export class PassengerDetailComponent {
+export class PassengerDetailComponent implements OnInit {
   passenger: Passenger | undefined;
-  title: string = 'Create Passenger';
-  buttonLabel: string = 'Create';
+  title = 'Create Passenger';
+  buttonLabel = 'Create';
 
   public objForm = new UntypedFormGroup({
     lastname: new UntypedFormControl(''),

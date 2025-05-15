@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -35,10 +35,10 @@ import { ToastModule } from 'primeng/toast';
   templateUrl: './airplane-detail.component.html',
   styleUrl: './airplane-detail.component.css',
 })
-export class AirplaneDetailComponent {
+export class AirplaneDetailComponent implements OnInit {
   airplane: Airplane | undefined;
-  title: string = 'Create Airplane';
-  buttonLabel: string = 'Create';
+  title = 'Create Airplane';
+  buttonLabel = 'Create';
 
   public objForm = new UntypedFormGroup({
     brand: new UntypedFormControl(''),
@@ -81,7 +81,7 @@ export class AirplaneDetailComponent {
     if (this.airplane) {
       if (this.airplane.id) {
         this.service.updateAirplane(this.airplane).subscribe({
-          next: (data) => {
+          next: () => {
             this.router.navigate(['airplanes'], {
               state: {
                 toast: {
@@ -105,7 +105,7 @@ export class AirplaneDetailComponent {
         });
       } else {
         this.service.saveAirplane(this.airplane).subscribe({
-          next: (data) => {
+          next: () => {
             this.router.navigate(['airplanes'], {
               state: {
                 toast: {

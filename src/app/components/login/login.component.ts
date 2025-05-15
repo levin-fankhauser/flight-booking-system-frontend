@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { SplitButton } from 'primeng/splitbutton';
 import { AppAuthService } from '../../service/app.auth.service';
@@ -9,9 +9,9 @@ import { AppAuthService } from '../../service/app.auth.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   items: MenuItem[] | undefined;
-  label: string = 'Not logged in';
+  label = 'Not logged in';
   username = '';
 
   constructor(private authService: AppAuthService) {}

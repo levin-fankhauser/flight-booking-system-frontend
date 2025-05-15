@@ -1,4 +1,4 @@
-export type Airplane = {
+export interface Airplane {
   id: number;
   brand: string;
   model: string;
@@ -6,4 +6,4 @@ export type Airplane = {
   airline: string;
   seatCapacity: number;
   createdBy: string;
-};
+}

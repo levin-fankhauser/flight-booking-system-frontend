@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -22,7 +22,7 @@ import { ToastModule } from 'primeng/toast';
   templateUrl: './airplane-overview.component.html',
   styleUrl: './airplane-overview.component.css',
 })
-export class AirplaneOverviewComponent {
+export class AirplaneOverviewComponent implements OnInit {
   airplaneData: Airplane[] = [];
 
   constructor(
@@ -73,7 +73,7 @@ export class AirplaneOverviewComponent {
         severity: 'danger',
       },
       accept: () => {
-        this.service.deleteAirplane(airplane.id).subscribe((obj) => {
+        this.service.deleteAirplane(airplane.id).subscribe(() => {
           this.loadAirplanes();
           this.messageService.add({
             severity: 'success',

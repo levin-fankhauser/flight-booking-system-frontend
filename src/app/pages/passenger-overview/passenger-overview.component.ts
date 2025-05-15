@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -22,7 +22,7 @@ import { PassengerService } from '../../service/passenger.service';
   templateUrl: './passenger-overview.component.html',
   styleUrl: './passenger-overview.component.css',
 })
-export class PassengerOverviewComponent {
+export class PassengerOverviewComponent implements OnInit {
   passengerData: Passenger[] = [];
 
   constructor(
