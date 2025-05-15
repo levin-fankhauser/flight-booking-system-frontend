@@ -53,7 +53,7 @@ export class FlightOverviewComponent implements OnInit {
   }
 
   async editFlight(flight: Flight) {
-    await this.router.navigate(['fligt', flight.id]);
+    await this.router.navigate(['flight', flight.id]);
   }
 
   async addFlight() {
@@ -75,15 +75,17 @@ export class FlightOverviewComponent implements OnInit {
         severity: 'danger',
       },
       accept: () => {
-        this.service.deleteFlight(flight.id).subscribe(() => {
-          this.loadFlights();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Record deleted',
-            life: 3000,
+        if (flight.id) {
+          this.service.deleteFlight(flight.id).subscribe(() => {
+            this.loadFlights();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: 'Record deleted',
+              life: 3000,
+            });
           });
-        });
+        }
       },
     });
   }

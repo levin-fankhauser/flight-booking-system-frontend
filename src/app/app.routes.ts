@@ -8,6 +8,7 @@ import { AirplaneDetailComponent } from './pages/airplane-detail/airplane-detail
 import { PassengerOverviewComponent } from './pages/passenger-overview/passenger-overview.component';
 import { PassengerDetailComponent } from './pages/passenger-detail/passenger-detail.component';
 import { FlightOverviewComponent } from './pages/flight-overview/flight-overview.component';
+import { FlightDetailComponent } from './pages/flight-detail/flight-detail.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -58,6 +59,18 @@ export const routes: Routes = [
     data: {
       roles: [AppRoles.Admin],
     },
+  },
+  {
+    path: 'flight',
+    component: FlightDetailComponent,
+    canActivate: [appCanActivate],
+    data: { roles: [AppRoles.Admin] },
+  },
+  {
+    path: 'flight/:id',
+    component: FlightDetailComponent,
+    canActivate: [appCanActivate],
+    data: { roles: [AppRoles.Admin] },
   },
   { path: 'noaccess', component: NoAccessComponent },
 ];

@@ -2,6 +2,7 @@ import {
   ApplicationConfig,
   importProvidersFrom,
   inject,
+  LOCALE_ID,
   provideEnvironmentInitializer,
   provideZoneChangeDetection,
 } from '@angular/core';
@@ -66,5 +67,6 @@ export const appConfig: ApplicationConfig = {
     provideEnvironmentInitializer(() => {
       inject(AppAuthService).initAuth().finally();
     }),
+    { provide: LOCALE_ID, useValue: 'de-CH' },
   ],
 };
