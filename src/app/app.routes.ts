@@ -12,6 +12,7 @@ import { FlightDetailComponent } from './pages/flight-detail/flight-detail.compo
 import { BookingOverviewComponent } from './pages/booking-overview/booking-overview.component';
 import { BookingDetailComponent } from './pages/booking-detail/booking-detail.component';
 import { PassengerAdminOverviewComponent } from './pages/passenger-admin-overview/passenger-admin-overview.component';
+import { PassengerAdminDetailComponent } from './pages/passenger-admin-detail/passenger-admin-detail.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -101,6 +102,8 @@ export const routes: Routes = [
     data: { roles: [AppRoles.Admin] },
     children: [
       { path: 'passengers', component: PassengerAdminOverviewComponent },
+      { path: 'passenger', component: PassengerAdminDetailComponent },
+      { path: 'passenger/:id', component: PassengerAdminDetailComponent },
     ],
   },
   { path: 'noaccess', component: NoAccessComponent },
