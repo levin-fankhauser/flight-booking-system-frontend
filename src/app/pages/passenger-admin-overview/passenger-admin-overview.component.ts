@@ -73,14 +73,26 @@ export class PassengerAdminOverviewComponent implements OnInit {
         severity: 'danger',
       },
       accept: () => {
-        this.service.deletePassenger(passenger.id).subscribe(() => {
-          this.loadPassengers();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Record deleted',
-            life: 3000,
-          });
+        this.service.deletePassenger(passenger.id).subscribe({
+          next: () => {
+            this.loadPassengers();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: 'Record deleted',
+              life: 3000,
+            });
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail:
+                'Failed to delete record - please delete linked booking first!',
+              life: 5000,
+            });
+            console.error('Delete error:', err);
+          },
         });
       },
     });

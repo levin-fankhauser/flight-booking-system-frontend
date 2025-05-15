@@ -76,14 +76,26 @@ export class FlightOverviewComponent implements OnInit {
       },
       accept: () => {
         if (flight.id) {
-          this.service.deleteFlight(flight.id).subscribe(() => {
-            this.loadFlights();
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Successful',
-              detail: 'Record deleted',
-              life: 3000,
-            });
+          this.service.deleteFlight(flight.id).subscribe({
+            next: () => {
+              this.loadFlights();
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Successful',
+                detail: 'Record deleted',
+                life: 3000,
+              });
+            },
+            error: (err) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail:
+                  'Failed to delete record - please delete linked booking first!',
+                life: 5000,
+              });
+              console.error('Delete error:', err);
+            },
           });
         }
       },

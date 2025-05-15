@@ -73,14 +73,26 @@ export class AirplaneOverviewComponent implements OnInit {
         severity: 'danger',
       },
       accept: () => {
-        this.service.deleteAirplane(airplane.id).subscribe(() => {
-          this.loadAirplanes();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Record deleted',
-            life: 3000,
-          });
+        this.service.deleteAirplane(airplane.id).subscribe({
+          next: () => {
+            this.loadAirplanes();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: 'Record deleted',
+              life: 3000,
+            });
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail:
+                'Failed to delete record - please delete linked flight first!',
+              life: 5000,
+            });
+            console.error('Delete error:', err);
+          },
         });
       },
     });
