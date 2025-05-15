@@ -7,6 +7,7 @@ import { AppRoles } from './app.roles';
 import { AirplaneDetailComponent } from './pages/airplane-detail/airplane-detail.component';
 import { PassengerOverviewComponent } from './pages/passenger-overview/passenger-overview.component';
 import { PassengerDetailComponent } from './pages/passenger-detail/passenger-detail.component';
+import { FlightOverviewComponent } from './pages/flight-overview/flight-overview.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -49,6 +50,14 @@ export const routes: Routes = [
     component: PassengerDetailComponent,
     canActivate: [appCanActivate],
     data: { roles: [AppRoles.User] },
+  },
+  {
+    path: 'flights',
+    component: FlightOverviewComponent,
+    canActivate: [appCanActivate],
+    data: {
+      roles: [AppRoles.Admin],
+    },
   },
   { path: 'noaccess', component: NoAccessComponent },
 ];

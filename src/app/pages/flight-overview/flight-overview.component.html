@@ -1,0 +1,57 @@
+<div class="flex justify-center">
+  <p-toast />
+  <p-confirmpopup />
+  <p-card>
+    <p-button
+      label="Add Flight"
+      icon="pi pi-plus"
+      severity="secondary"
+      (onClick)="addFlight()"
+    />
+    <p-table [value]="flightData">
+      <ng-template #header>
+        <tr>
+          <th>ID</th>
+          <th>Origin</th>
+          <th>Destination</th>
+          <th>Airplane</th>
+          <th>Departure</th>
+          <th>Arrival</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-flight>
+        <tr>
+          <td>{{ flight.id }}</td>
+          <td>{{ flight.origin }}</td>
+          <td>{{ flight.destination }}</td>
+          <td>
+            {{
+              flight.airplane.airline +
+                " - " +
+                flight.airplane.brand +
+                " " +
+                flight.airplane.model
+            }}
+          </td>
+          <td>{{ flight.departure | date : "dd.MM.yyyy HH:mm" }}</td>
+          <td>{{ flight.arrival | date : "dd.MM.yyyy HH:mm" }}</td>
+          <td class="flex gap-2">
+            <p-button
+              icon="pi pi-pen-to-square"
+              severity="secondary"
+              [rounded]="true"
+              (onClick)="editFlight(flight)"
+            />
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              [rounded]="true"
+              (onClick)="deleteFlight(flight, $event)"
+            />
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>

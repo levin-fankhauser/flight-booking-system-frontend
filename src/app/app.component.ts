@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
           {
             label: 'Flights',
             icon: 'pi pi-globe',
-            routerLink: '',
+            routerLink: '/flights',
           },
         ],
       },
