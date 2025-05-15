@@ -24,17 +24,17 @@ export class PassengerService {
     );
   }
 
-  public updatePassenger(Passenger: Passenger): Observable<Passenger> {
+  public updatePassenger(passenger: Passenger): Observable<Passenger> {
     return this.http.put<Passenger>(
-      environment.backendBaseUrl + this.backendUrl + `/${Passenger.id}`,
-      Passenger
+      environment.backendBaseUrl + this.backendUrl + `/${passenger.id}`,
+      passenger
     );
   }
 
-  public savePassenger(Passenger: Passenger): Observable<Passenger> {
+  public savePassenger(passenger: Passenger): Observable<Passenger> {
     return this.http.post<Passenger>(
       environment.backendBaseUrl + this.backendUrl,
-      Passenger
+      passenger
     );
   }
 

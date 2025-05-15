@@ -24,17 +24,17 @@ export class FlightService {
     );
   }
 
-  public updateFlight(Flight: Flight): Observable<Flight> {
+  public updateFlight(flight: Flight): Observable<Flight> {
     return this.http.put<Flight>(
-      environment.backendBaseUrl + this.backendUrl + `/${Flight.id}`,
-      Flight
+      environment.backendBaseUrl + this.backendUrl + `/${flight.id}`,
+      flight
     );
   }
 
-  public saveFlight(Flight: Flight): Observable<Flight> {
+  public saveFlight(flight: Flight): Observable<Flight> {
     return this.http.post<Flight>(
       environment.backendBaseUrl + this.backendUrl,
-      Flight
+      flight
     );
   }
 

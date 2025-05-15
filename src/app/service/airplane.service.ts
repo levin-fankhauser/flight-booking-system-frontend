@@ -24,17 +24,17 @@ export class AirplaneService {
     );
   }
 
-  public updateAirplane(Airplane: Airplane): Observable<Airplane> {
+  public updateAirplane(airplane: Airplane): Observable<Airplane> {
     return this.http.put<Airplane>(
-      environment.backendBaseUrl + this.backendUrl + `/${Airplane.id}`,
-      Airplane
+      environment.backendBaseUrl + this.backendUrl + `/${airplane.id}`,
+      airplane
     );
   }
 
-  public saveAirplane(Airplane: Airplane): Observable<Airplane> {
+  public saveAirplane(airplane: Airplane): Observable<Airplane> {
     return this.http.post<Airplane>(
       environment.backendBaseUrl + this.backendUrl,
-      Airplane
+      airplane
     );
   }
 
