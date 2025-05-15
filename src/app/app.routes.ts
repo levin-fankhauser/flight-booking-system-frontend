@@ -6,6 +6,7 @@ import { appCanActivate } from './guard/app.auth.guard';
 import { AppRoles } from './app.roles';
 import { AirplaneDetailComponent } from './pages/airplane-detail/airplane-detail.component';
 import { PassengerOverviewComponent } from './pages/passenger-overview/passenger-overview.component';
+import { PassengerDetailComponent } from './pages/passenger-detail/passenger-detail.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -36,6 +37,18 @@ export const routes: Routes = [
     data: {
       roles: [AppRoles.User],
     },
+  },
+  {
+    path: 'passenger',
+    component: PassengerDetailComponent,
+    canActivate: [appCanActivate],
+    data: { roles: [AppRoles.User] },
+  },
+  {
+    path: 'passenger/:id',
+    component: PassengerDetailComponent,
+    canActivate: [appCanActivate],
+    data: { roles: [AppRoles.User] },
   },
   { path: 'noaccess', component: NoAccessComponent },
 ];

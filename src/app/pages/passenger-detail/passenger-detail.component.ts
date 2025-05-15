@@ -12,13 +12,13 @@ import { MatInput } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { Airplane } from '../../data/airplane';
-import { AirplaneService } from '../../service/airplane.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { Passenger } from '../../data/passenger';
+import { PassengerService } from '../../service/passenger.service';
 
 @Component({
-  selector: 'app-airplane-detail',
+  selector: 'app-passenger-detail',
   imports: [
     CardModule,
     MatButton,
@@ -32,25 +32,24 @@ import { ToastModule } from 'primeng/toast';
     ToastModule,
   ],
   providers: [MessageService],
-  templateUrl: './airplane-detail.component.html',
-  styleUrl: './airplane-detail.component.css',
+  templateUrl: './passenger-detail.component.html',
+  styleUrl: './passenger-detail.component.css',
 })
-export class AirplaneDetailComponent {
-  airplane: Airplane | undefined;
-  title: string = 'Create Airplane';
+export class PassengerDetailComponent {
+  passenger: Passenger | undefined;
+  title: string = 'Create Passenger';
   buttonLabel: string = 'Create';
 
   public objForm = new UntypedFormGroup({
-    brand: new UntypedFormControl(''),
-    model: new UntypedFormControl(''),
-    constructionYear: new UntypedFormControl(''),
-    airline: new UntypedFormControl(''),
-    seatCapacity: new UntypedFormControl(''),
+    lastname: new UntypedFormControl(''),
+    firstname: new UntypedFormControl(''),
+    age: new UntypedFormControl(''),
+    nationality: new UntypedFormControl(''),
   });
 
   constructor(
     private router: Router,
-    private service: AirplaneService,
+    private service: PassengerService,
     private messageService: MessageService,
     private route: ActivatedRoute,
     private formBuilder: UntypedFormBuilder
@@ -62,32 +61,32 @@ export class AirplaneDetailComponent {
         this.route.snapshot.paramMap.get('id') as string
       );
 
-      this.service.getAirplane(id).subscribe((obj) => {
-        this.airplane = obj;
+      this.service.getPassenger(id).subscribe((obj) => {
+        this.passenger = obj;
         this.objForm = this.formBuilder.group(obj);
-        this.title = 'Edit Airplane';
+        this.title = 'Edit Passenger';
         this.buttonLabel = 'Update';
       });
     }
   }
 
   async back() {
-    await this.router.navigate(['airplanes']);
+    await this.router.navigate(['passengers']);
   }
 
   async save(formData: any) {
-    this.airplane = Object.assign(formData);
+    this.passenger = Object.assign(formData);
 
-    if (this.airplane) {
-      if (this.airplane.id) {
-        this.service.updateAirplane(this.airplane).subscribe({
-          next: (data) => {
-            this.router.navigate(['airplanes'], {
+    if (this.passenger) {
+      if (this.passenger.id) {
+        this.service.updatePassenger(this.passenger).subscribe({
+          next: () => {
+            this.router.navigate(['passengers'], {
               state: {
                 toast: {
                   severity: 'success',
                   summary: 'Success',
-                  detail: 'Airplane updated successfully',
+                  detail: 'Passenger updated successfully',
                   life: 3000,
                 },
               },
@@ -97,21 +96,21 @@ export class AirplaneDetailComponent {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
-              detail: 'Failed to update airplane',
+              detail: 'Failed to update Passenger',
               life: 3000,
             });
-            console.error('Error updating airplane:', error);
+            console.error('Error updating passenger:', error);
           },
         });
       } else {
-        this.service.saveAirplane(this.airplane).subscribe({
-          next: (data) => {
-            this.router.navigate(['airplanes'], {
+        this.service.savePassenger(this.passenger).subscribe({
+          next: () => {
+            this.router.navigate(['passengers'], {
               state: {
                 toast: {
                   severity: 'success',
                   summary: 'Success',
-                  detail: 'Airplane created successfully',
+                  detail: 'Passenger created successfully',
                   life: 3000,
                 },
               },
@@ -121,10 +120,10 @@ export class AirplaneDetailComponent {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
-              detail: 'Failed to save airplane',
+              detail: 'Failed to save passenger',
               life: 3000,
             });
-            console.error('Error saving airplane:', error);
+            console.error('Error saving passenger:', error);
           },
         });
       }
