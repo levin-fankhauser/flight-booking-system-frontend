@@ -83,18 +83,23 @@ export class AirplaneDetailComponent {
       if (this.airplane.id) {
         this.service.updateAirplane(this.airplane).subscribe({
           next: (data) => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: 'Airplane updated successfully',
+            this.router.navigate(['airplanes'], {
+              state: {
+                toast: {
+                  severity: 'success',
+                  summary: 'Success',
+                  detail: 'Airplane updated successfully',
+                  life: 3000,
+                },
+              },
             });
-            this.router.navigate(['airplanes']);
           },
           error: (error) => {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
               detail: 'Failed to update airplane',
+              life: 3000,
             });
             console.error('Error updating airplane:', error);
           },
@@ -102,18 +107,23 @@ export class AirplaneDetailComponent {
       } else {
         this.service.saveAirplane(this.airplane).subscribe({
           next: (data) => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: 'Airplane saved successfully',
+            this.router.navigate(['airplanes'], {
+              state: {
+                toast: {
+                  severity: 'success',
+                  summary: 'Success',
+                  detail: 'Airplane saved successfully',
+                  life: 3000,
+                },
+              },
             });
-            this.router.navigate(['airplanes']);
           },
           error: (error) => {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
               detail: 'Failed to save airplane',
+              life: 3000,
             });
             console.error('Error saving airplane:', error);
           },

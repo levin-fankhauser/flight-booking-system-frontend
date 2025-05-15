@@ -1,4 +1,6 @@
 <div class="flex justify-center">
+  <p-toast />
+  <p-confirmpopup />
   <p-card>
     <p-button
       label="Add Airplane"
@@ -39,7 +41,7 @@
               icon="pi pi-trash"
               severity="danger"
               [rounded]="true"
-              (onClick)="deleteAirplane(airplane)"
+              (onClick)="deleteAirplane(airplane, $event)"
             />
           </td>
         </tr>
