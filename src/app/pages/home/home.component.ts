@@ -10,11 +10,17 @@ import { AppAuthService } from '../../service/app.auth.service';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
+  passengerRoute = '/passengers';
+  bookingRoute = '/bookings';
+
   constructor(private authService: AppAuthService) {}
 
   ngOnInit() {
-    this.authService.hasRole('admin').subscribe((obj) => {
-      console.log('Role:', obj);
+    this.authService.hasRole('admin').subscribe((isAdmin) => {
+      if (isAdmin) {
+        this.passengerRoute = '/admin/passengers';
+        this.bookingRoute = '/admin/bookings';
+      }
     });
   }
 }

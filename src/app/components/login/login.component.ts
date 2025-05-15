@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
       this.items = [
         {
           label: 'Logout',
+          icon: 'pi pi-sign-out',
           command: () => this.logout(),
         },
       ];
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit {
       this.items = [
         {
           label: 'Login',
+          icon: 'pi pi-sign-in',
           command: () => this.login(),
         },
       ];

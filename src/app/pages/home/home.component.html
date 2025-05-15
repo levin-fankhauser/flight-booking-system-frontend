@@ -3,12 +3,12 @@
     <app-task-card
       taskTitle="Manage Passengers"
       taskIcon="pi-id-card"
-      route="/passengers"
+      [route]="passengerRoute"
     />
     <app-task-card
       taskTitle="Manage Bookings"
       taskIcon="pi-calendar"
-      route="/bookings"
+      [route]="bookingRoute"
     />
   </div>
   <div class="flex justify-evenly w-3/4" *appIsInRole="'admin'">
