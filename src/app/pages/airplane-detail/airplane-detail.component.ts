@@ -112,7 +112,7 @@ export class AirplaneDetailComponent {
                 toast: {
                   severity: 'success',
                   summary: 'Success',
-                  detail: 'Airplane saved successfully',
+                  detail: 'Airplane created successfully',
                   life: 3000,
                 },
               },

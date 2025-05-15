@@ -33,21 +33,20 @@ export class AirplaneOverviewComponent {
   ) {}
 
   ngOnInit() {
-    const toast = history.state.toast;
-    console.log(toast);
-
-    if (toast) {
-      this.messageService.add(toast);
-    }
-
-    this.loadAirplanes();
+    this.loadAirplanes(true);
   }
 
-  private loadAirplanes() {
+  private loadAirplanes(showToast?: boolean) {
     this.service.getAllAirplanes().subscribe((obj) => {
-      console.log(obj);
-
       this.airplaneData = obj;
+
+      if (showToast) {
+        const toast = history.state.toast;
+
+        if (toast) {
+          this.messageService.add(toast);
+        }
+      }
     });
   }
 
@@ -75,11 +74,10 @@ export class AirplaneOverviewComponent {
       },
       accept: () => {
         this.service.deleteAirplane(airplane.id).subscribe((obj) => {
-          console.log(obj);
           this.loadAirplanes();
           this.messageService.add({
             severity: 'success',
-            summary: 'Confirmed',
+            summary: 'Successful',
             detail: 'Record deleted',
             life: 3000,
           });
