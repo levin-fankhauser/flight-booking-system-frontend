@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
           {
             label: 'Bookings',
             icon: 'pi pi-calendar',
-            routerLink: '',
+            routerLink: '/bookings',
           },
           {
             label: 'Airplanes',
