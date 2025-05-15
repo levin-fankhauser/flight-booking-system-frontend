@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthConfig, OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, map, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -85,6 +85,10 @@ export class AppAuthService {
 
   public isAuthenticated() {
     return this.oauthService.hasValidAccessToken();
+  }
+
+  public hasRole(role: string): Observable<boolean> {
+    return this.getRoles().pipe(map((roles) => roles.includes(role)));
   }
 
   public logout() {
