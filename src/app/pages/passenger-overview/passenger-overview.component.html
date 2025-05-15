@@ -1,0 +1,47 @@
+<div class="flex justify-center">
+  <p-toast />
+  <p-confirmpopup />
+  <p-card>
+    <p-button
+      label="Add Passenger"
+      icon="pi pi-plus"
+      severity="secondary"
+      (onClick)="addPassenger()"
+    />
+    <p-table [value]="passengerData">
+      <ng-template #header>
+        <tr>
+          <th>ID</th>
+          <th>Lastname</th>
+          <th>Firstname</th>
+          <th>Age</th>
+          <th>Nationality</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-passenger>
+        <tr>
+          <td>{{ passenger.id }}</td>
+          <td>{{ passenger.lastname }}</td>
+          <td>{{ passenger.firstname }}</td>
+          <td>{{ passenger.age }}</td>
+          <td>{{ passenger.nationality }}</td>
+          <td class="flex gap-2">
+            <p-button
+              icon="pi pi-pen-to-square"
+              severity="secondary"
+              [rounded]="true"
+              (onClick)="editPassenger(passenger)"
+            />
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              [rounded]="true"
+              (onClick)="deletePassenger(passenger, $event)"
+            />
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>

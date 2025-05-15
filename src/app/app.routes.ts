@@ -5,6 +5,7 @@ import { NoAccessComponent } from './pages/no-access/no-access.component';
 import { appCanActivate } from './guard/app.auth.guard';
 import { AppRoles } from './app.roles';
 import { AirplaneDetailComponent } from './pages/airplane-detail/airplane-detail.component';
+import { PassengerOverviewComponent } from './pages/passenger-overview/passenger-overview.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -27,6 +28,14 @@ export const routes: Routes = [
     component: AirplaneDetailComponent,
     canActivate: [appCanActivate],
     data: { roles: [AppRoles.Admin] },
+  },
+  {
+    path: 'passengers',
+    component: PassengerOverviewComponent,
+    canActivate: [appCanActivate],
+    data: {
+      roles: [AppRoles.User],
+    },
   },
   { path: 'noaccess', component: NoAccessComponent },
 ];

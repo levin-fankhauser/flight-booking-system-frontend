@@ -28,7 +28,7 @@ export class AppComponent {
           {
             label: 'Passengers',
             icon: 'pi pi-id-card',
-            routerLink: '',
+            routerLink: '/passengers',
           },
           {
             label: 'Bookings',
