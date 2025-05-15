@@ -16,6 +16,16 @@
         [formGroup]="objForm!"
       >
         <mat-form-field>
+          <mat-label>Passenger</mat-label>
+          <mat-select formControlName="passenger" required>
+            @for (passenger of passengers; track passenger) {
+            <mat-option [value]="passenger.id">{{
+              passenger.firstname + " " + passenger.lastname
+            }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
           <mat-label>Origin</mat-label>
           <input
             #inputOrigin
@@ -42,16 +52,6 @@
           <mat-hint align="end"
             >{{ inputDestination.value.length || 0 }}/100</mat-hint
           >
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Airplane</mat-label>
-          <mat-select formControlName="airplane" required>
-            @for (airplane of airplanes; track airplane) {
-            <mat-option [value]="airplane.id">{{
-              airplane.airline + " - " + airplane.brand + " " + airplane.model
-            }}</mat-option>
-            }
-          </mat-select>
         </mat-form-field>
         <div class="flex gap-5">
           <mat-form-field appearance="fill">
@@ -83,7 +83,6 @@
             ></mat-timepicker-toggle>
           </mat-form-field>
         </div>
-
         <div class="flex gap-5">
           <mat-form-field appearance="fill">
             <mat-label>Arrival Date</mat-label>
@@ -114,7 +113,66 @@
             ></mat-timepicker-toggle>
           </mat-form-field>
         </div>
-
+        <mat-form-field>
+          <mat-label>First Flight</mat-label>
+          <mat-select formControlName="firstFlight" required>
+            @for (flight of flights; track flight) {
+            <mat-option [value]="flight.id">{{
+              flight.origin + " - " + flight.destination
+            }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Second Flight</mat-label>
+          <mat-select formControlName="secondFlight">
+            @for (flight of flights; track flight) {
+            <mat-option [value]="flight.id">{{
+              flight.origin + " - " + flight.destination
+            }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>First Flight</mat-label>
+          <mat-select formControlName="thirdFlight">
+            @for (flight of flights; track flight) {
+            <mat-option [value]="flight.id">{{
+              flight.origin + " - " + flight.destination
+            }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <div class="flex gap-5">
+          <mat-form-field appearance="fill">
+            <mat-label>Booking Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="bookingDatePicker"
+              formControlName="bookingDate"
+              required
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="bookingDatePicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #bookingDatePicker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Booking Time</mat-label>
+            <input
+              matInput
+              [matTimepicker]="bookingTimePicker"
+              formControlName="bookingTime"
+              required
+            />
+            <mat-timepicker #bookingTimePicker></mat-timepicker>
+            <mat-timepicker-toggle
+              [for]="bookingTimePicker"
+              matSuffix
+            ></mat-timepicker-toggle>
+          </mat-form-field>
+        </div>
         <div class="flex justify-end">
           <button
             [disabled]="!objForm.valid"

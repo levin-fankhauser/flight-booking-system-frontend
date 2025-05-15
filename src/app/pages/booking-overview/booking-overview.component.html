@@ -12,7 +12,7 @@
       <ng-template #header>
         <tr>
           <th style="min-width: 100px">ID</th>
-          <th style="min-width: 100px">Passenger</th>
+          <th style="min-width: 200px">Passenger</th>
           <th style="min-width: 100px">Origin</th>
           <th style="min-width: 100px">Destination</th>
           <th style="min-width: 200px">Departure</th>
@@ -45,20 +45,24 @@
           </td>
           <td>
             {{
-              booking.secondFlight.airplane.airline +
-                " - " +
-                booking.secondFlight.origin +
-                " to " +
-                booking.secondFlight.destination
+              booking.secondFlight
+                ? booking.secondFlight.airplane.airline +
+                  " - " +
+                  booking.secondFlight.origin +
+                  " to " +
+                  booking.secondFlight.destination
+                : "No second flight"
             }}
           </td>
           <td>
             {{
-              booking.thirdFlight.airplane.airline +
-                " - " +
-                booking.thirdFlight.origin +
-                " to " +
-                booking.thirdFlight.destination
+              booking.thirdFlight
+                ? booking.thirdFlight.airplane.airline +
+                  " - " +
+                  booking.thirdFlight.origin +
+                  " to " +
+                  booking.thirdFlight.destination
+                : "No third flight"
             }}
           </td>
           <td>{{ booking.bookingDate | date : "dd.MM.yyyy HH:mm" }}</td>

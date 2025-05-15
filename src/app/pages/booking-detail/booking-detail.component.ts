@@ -17,13 +17,15 @@ import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ToastModule } from 'primeng/toast';
-import { Airplane } from '../../data/airplane';
+import { Booking } from '../../data/booking';
 import { Flight } from '../../data/flight';
-import { AirplaneService } from '../../service/airplane.service';
+import { Passenger } from '../../data/passenger';
+import { BookingService } from '../../service/booking.service';
 import { FlightService } from '../../service/flight.service';
+import { PassengerService } from '../../service/passenger.service';
 
 @Component({
-  selector: 'app-flight-detail',
+  selector: 'app-booking-detail',
   imports: [
     CardModule,
     MatButton,
@@ -40,37 +42,46 @@ import { FlightService } from '../../service/flight.service';
     MatTimepickerModule,
   ],
   providers: [MessageService, provideNativeDateAdapter()],
-
-  templateUrl: './flight-detail.component.html',
-  styleUrl: './flight-detail.component.css',
+  templateUrl: './booking-detail.component.html',
+  styleUrl: './booking-detail.component.css',
 })
-export class FlightDetailComponent implements OnInit {
-  flight: Flight | undefined;
-  airplanes: Airplane[] = [];
-  title = 'Create Flight';
+export class BookingDetailComponent implements OnInit {
+  booking: Booking | undefined;
+  passengers: Passenger[] = [];
+  flights: Flight[] = [];
+  title = 'Create Booking';
   buttonLabel = 'Create';
 
   public objForm = new UntypedFormGroup({
+    passenger: new UntypedFormControl(''),
     origin: new UntypedFormControl(''),
     destination: new UntypedFormControl(''),
-    airplane: new UntypedFormControl(''),
     departureDate: new UntypedFormControl(''),
     departureTime: new UntypedFormControl(''),
     arrivalDate: new UntypedFormControl(''),
     arrivalTime: new UntypedFormControl(''),
+    firstFlight: new UntypedFormControl(''),
+    secondFlight: new UntypedFormControl(''),
+    thirdFlight: new UntypedFormControl(''),
+    bookingDate: new UntypedFormControl(''),
+    bookingTime: new UntypedFormControl(''),
   });
 
   constructor(
     private router: Router,
-    private service: FlightService,
-    private airplaneService: AirplaneService,
+    private service: BookingService,
+    private passengerService: PassengerService,
+    private flightService: FlightService,
     private messageService: MessageService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.airplaneService.getAllAirplanes().subscribe((obj) => {
-      this.airplanes = obj;
+    this.passengerService.getAllPassengers().subscribe((obj) => {
+      this.passengers = obj;
+    });
+    this.flightService.getAllFlights().subscribe((obj) => {
+      this.flights = obj;
     });
 
     if (this.route.snapshot.paramMap.get('id')) {
@@ -78,27 +89,37 @@ export class FlightDetailComponent implements OnInit {
         this.route.snapshot.paramMap.get('id') as string
       );
 
-      this.service.getFlight(id).subscribe((obj) => {
-        this.flight = obj;
+      this.service.getBooking(id).subscribe((obj) => {
+        this.booking = obj;
 
         this.objForm.patchValue({
+          passenger: obj.passenger.id,
           origin: obj.origin,
           destination: obj.destination,
-          airplane: obj.airplane.id,
           departureDate: new Date(obj.departure),
           departureTime: new Date(obj.departure),
           arrivalDate: new Date(obj.arrival),
           arrivalTime: new Date(obj.arrival),
+          firstFlight: obj.firstFlight.id,
+          secondFlight: obj.secondFlight?.id,
+          thirdFlight: obj.thirdFlight?.id,
+          bookingDate: new Date(obj.bookingDate),
+          bookingTime: new Date(obj.bookingDate),
         });
 
-        this.title = 'Edit Flight';
+        this.title = 'Edit Booking';
         this.buttonLabel = 'Update';
+      });
+    } else {
+      this.objForm.patchValue({
+        bookingDate: new Date(),
+        bookingTime: new Date(),
       });
     }
   }
 
   async back() {
-    await this.router.navigate(['flights']);
+    await this.router.navigate(['bookings']);
   }
 
   async save(formData: any) {
@@ -110,27 +131,43 @@ export class FlightDetailComponent implements OnInit {
     arrivalDateTime.setHours(formData.arrivalTime.getHours());
     arrivalDateTime.setMinutes(formData.arrivalTime.getMinutes());
 
-    this.flight = {
-      ...this.flight,
-      airplane: this.airplanes.find(
-        (airplane) => airplane.id === formData.airplane
-      ) as Airplane,
+    const bookingDateTime = new Date(formData.bookingDate);
+    bookingDateTime.setHours(formData.bookingTime.getHours());
+    bookingDateTime.setMinutes(formData.bookingTime.getMinutes());
+
+    this.booking = {
+      ...this.booking,
+      passenger: this.passengers.find(
+        (passenger) => passenger.id === formData.passenger
+      ) as Passenger,
       origin: formData.origin,
       destination: formData.destination,
       departure: this.toLocalIsoString(departureDateTime),
       arrival: this.toLocalIsoString(arrivalDateTime),
+      firstFlight: this.flights.find(
+        (flight) => flight.id === formData.firstFlight
+      ) as Flight,
+      secondFlight: this.flights.find(
+        (flight) => flight.id === formData.secondFlight
+      ) as Flight,
+      thirdFlight: this.flights.find(
+        (flight) => flight.id === formData.thirdFlight
+      ) as Flight,
+      bookingDate: this.toLocalIsoString(bookingDateTime),
     };
 
-    if (this.flight) {
-      if (this.flight.id) {
-        this.service.updateFlight(this.flight).subscribe({
+    console.log('Booking:', this.booking);
+
+    if (this.booking) {
+      if (this.booking.id) {
+        this.service.updateBooking(this.booking).subscribe({
           next: () => {
-            this.router.navigate(['flights'], {
+            this.router.navigate(['bookings'], {
               state: {
                 toast: {
                   severity: 'success',
                   summary: 'Success',
-                  detail: 'Flight updated successfully',
+                  detail: 'Booking updated successfully',
                   life: 3000,
                 },
               },
@@ -140,21 +177,21 @@ export class FlightDetailComponent implements OnInit {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
-              detail: 'Failed to update flight',
+              detail: 'Failed to update booking',
               life: 3000,
             });
-            console.error('Error updating flight:', error);
+            console.error('Error updating booking:', error);
           },
         });
       } else {
-        this.service.saveFlight(this.flight).subscribe({
+        this.service.saveBooking(this.booking).subscribe({
           next: () => {
-            this.router.navigate(['flights'], {
+            this.router.navigate(['bookings'], {
               state: {
                 toast: {
                   severity: 'success',
                   summary: 'Success',
-                  detail: 'Flight created successfully',
+                  detail: 'Booking created successfully',
                   life: 3000,
                 },
               },
@@ -164,10 +201,10 @@ export class FlightDetailComponent implements OnInit {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
-              detail: 'Failed to save flight',
+              detail: 'Failed to save booking',
               life: 3000,
             });
-            console.error('Error saving flight:', error);
+            console.error('Error saving booking:', error);
           },
         });
       }

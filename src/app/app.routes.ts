@@ -10,6 +10,7 @@ import { PassengerDetailComponent } from './pages/passenger-detail/passenger-det
 import { FlightOverviewComponent } from './pages/flight-overview/flight-overview.component';
 import { FlightDetailComponent } from './pages/flight-detail/flight-detail.component';
 import { BookingOverviewComponent } from './pages/booking-overview/booking-overview.component';
+import { BookingDetailComponent } from './pages/booking-detail/booking-detail.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -80,6 +81,18 @@ export const routes: Routes = [
     data: {
       roles: [AppRoles.User],
     },
+  },
+  {
+    path: 'booking',
+    component: BookingDetailComponent,
+    canActivate: [appCanActivate],
+    data: { roles: [AppRoles.User] },
+  },
+  {
+    path: 'booking/:id',
+    component: BookingDetailComponent,
+    canActivate: [appCanActivate],
+    data: { roles: [AppRoles.User] },
   },
   { path: 'noaccess', component: NoAccessComponent },
 ];
