@@ -13,6 +13,7 @@ import { BookingOverviewComponent } from './pages/booking-overview/booking-overv
 import { BookingDetailComponent } from './pages/booking-detail/booking-detail.component';
 import { PassengerAdminOverviewComponent } from './pages/passenger-admin-overview/passenger-admin-overview.component';
 import { PassengerAdminDetailComponent } from './pages/passenger-admin-detail/passenger-admin-detail.component';
+import { BookingAdminOverviewComponent } from './pages/booking-admin-overview/booking-admin-overview.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -104,6 +105,7 @@ export const routes: Routes = [
       { path: 'passengers', component: PassengerAdminOverviewComponent },
       { path: 'passenger', component: PassengerAdminDetailComponent },
       { path: 'passenger/:id', component: PassengerAdminDetailComponent },
+      { path: 'bookings', component: BookingAdminOverviewComponent },
     ],
   },
   { path: 'noaccess', component: NoAccessComponent },

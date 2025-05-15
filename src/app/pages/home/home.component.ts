@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TaskCardComponent } from '../../components/task-card/task-card.component';
 import { IsInRoleDirective } from '../../dir/is.in.role.dir';
 import { AppAuthService } from '../../service/app.auth.service';
@@ -9,7 +9,7 @@ import { AppAuthService } from '../../service/app.auth.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   passengerRoute = '/passengers';
   bookingRoute = '/bookings';
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -35,7 +35,7 @@ import { PassengerAdminService } from '../../service/passenger-admin.service';
   templateUrl: './passenger-admin-detail.component.html',
   styleUrl: './passenger-admin-detail.component.css',
 })
-export class PassengerAdminDetailComponent {
+export class PassengerAdminDetailComponent implements OnInit {
   passenger: Passenger | undefined;
   title = 'Create Passenger';
   buttonLabel = 'Create';

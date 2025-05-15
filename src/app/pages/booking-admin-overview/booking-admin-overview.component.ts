@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -6,39 +7,40 @@ import { CardModule } from 'primeng/card';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { Passenger } from '../../data/passenger';
-import { PassengerAdminService } from '../../service/passenger-admin.service';
+import { Booking } from '../../data/booking';
+import { BookingAdminService } from '../../service/booking-admin.service';
 
 @Component({
-  selector: 'app-passenger-admin-overview',
+  selector: 'app-booking-admin-overview',
   imports: [
     TableModule,
     CardModule,
     ButtonModule,
     ConfirmPopupModule,
     ToastModule,
+    CommonModule,
   ],
   providers: [ConfirmationService, MessageService],
-  templateUrl: './passenger-admin-overview.component.html',
-  styleUrl: './passenger-admin-overview.component.css',
+  templateUrl: './booking-admin-overview.component.html',
+  styleUrl: './booking-admin-overview.component.css',
 })
-export class PassengerAdminOverviewComponent implements OnInit {
-  passengerData: Passenger[] = [];
+export class BookingAdminOverviewComponent implements OnInit {
+  bookingData: Booking[] = [];
 
   constructor(
-    private service: PassengerAdminService,
+    private service: BookingAdminService,
     private router: Router,
     private confirmationService: ConfirmationService,
     private messageService: MessageService
   ) {}
 
   ngOnInit() {
-    this.loadPassengers(true);
+    this.loadBookings(true);
   }
 
-  private loadPassengers(showToast?: boolean) {
-    this.service.getAllPassengers().subscribe((obj) => {
-      this.passengerData = obj;
+  private loadBookings(showToast?: boolean) {
+    this.service.getAllBookings().subscribe((obj) => {
+      this.bookingData = obj;
 
       if (showToast) {
         const toast = history.state.toast;
@@ -50,15 +52,15 @@ export class PassengerAdminOverviewComponent implements OnInit {
     });
   }
 
-  async editPassenger(passenger: Passenger) {
-    await this.router.navigate(['admin/passenger', passenger.id]);
+  async editBooking(booking: Booking) {
+    await this.router.navigate(['admin/booking', booking.id]);
   }
 
-  async addPassenger() {
-    await this.router.navigate(['admin/passenger']);
+  async addBooking() {
+    await this.router.navigate(['admin/booking']);
   }
 
-  deletePassenger(passenger: Passenger, event: Event) {
+  deleteBooking(booking: Booking, event: Event) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Do you want to delete this record?',
@@ -73,15 +75,17 @@ export class PassengerAdminOverviewComponent implements OnInit {
         severity: 'danger',
       },
       accept: () => {
-        this.service.deletePassenger(passenger.id).subscribe(() => {
-          this.loadPassengers();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Successful',
-            detail: 'Record deleted',
-            life: 3000,
+        if (booking.id) {
+          this.service.deleteBooking(booking.id).subscribe(() => {
+            this.loadBookings();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: 'Record deleted',
+              life: 3000,
+            });
           });
-        });
+        }
       },
     });
   }
