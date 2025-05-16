@@ -78,11 +78,11 @@ export class BookingAdminDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.passengerService.getAllPassengers().subscribe((obj) => {
-      this.passengers = obj;
+    this.passengerService.getAllPassengers().subscribe((passengers) => {
+      this.passengers = passengers;
     });
-    this.flightService.getAllFlights().subscribe((obj) => {
-      this.flights = obj;
+    this.flightService.getAllFlights().subscribe((flights) => {
+      this.flights = flights;
     });
 
     if (this.route.snapshot.paramMap.get('id')) {
@@ -90,23 +90,23 @@ export class BookingAdminDetailComponent implements OnInit {
         this.route.snapshot.paramMap.get('id') as string
       );
 
-      this.service.getBooking(id).subscribe((obj) => {
-        this.booking = obj;
+      this.service.getBooking(id).subscribe((booking) => {
+        this.booking = booking;
 
         this.objForm.patchValue({
-          passenger: obj.passenger.id,
-          origin: obj.origin,
-          destination: obj.destination,
-          departureDate: new Date(obj.departure),
-          departureTime: new Date(obj.departure),
-          arrivalDate: new Date(obj.arrival),
-          arrivalTime: new Date(obj.arrival),
-          firstFlight: obj.firstFlight.id,
-          secondFlight: obj.secondFlight?.id,
-          thirdFlight: obj.thirdFlight?.id,
-          bookingDate: new Date(obj.bookingDate),
-          bookingTime: new Date(obj.bookingDate),
-          createdBy: obj.createdBy,
+          passenger: booking.passenger.id,
+          origin: booking.origin,
+          destination: booking.destination,
+          departureDate: new Date(booking.departure),
+          departureTime: new Date(booking.departure),
+          arrivalDate: new Date(booking.arrival),
+          arrivalTime: new Date(booking.arrival),
+          firstFlight: booking.firstFlight.id,
+          secondFlight: booking.secondFlight?.id,
+          thirdFlight: booking.thirdFlight?.id,
+          bookingDate: new Date(booking.bookingDate),
+          bookingTime: new Date(booking.bookingDate),
+          createdBy: booking.createdBy,
         });
 
         this.title = 'Edit Booking';

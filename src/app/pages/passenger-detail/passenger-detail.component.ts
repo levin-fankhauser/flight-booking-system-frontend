@@ -61,9 +61,9 @@ export class PassengerDetailComponent implements OnInit {
         this.route.snapshot.paramMap.get('id') as string
       );
 
-      this.service.getPassenger(id).subscribe((obj) => {
-        this.passenger = obj;
-        this.objForm = this.formBuilder.group(obj);
+      this.service.getPassenger(id).subscribe((passenger) => {
+        this.passenger = passenger;
+        this.objForm = this.formBuilder.group(passenger);
         this.title = 'Edit Passenger';
         this.buttonLabel = 'Update';
       });

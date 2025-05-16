@@ -39,8 +39,8 @@ export class FlightOverviewComponent implements OnInit {
   }
 
   private loadFlights(showToast?: boolean) {
-    this.service.getAllFlights().subscribe((obj) => {
-      this.flightData = obj;
+    this.service.getAllFlights().subscribe((flights) => {
+      this.flightData = flights;
 
       if (showToast) {
         const toast = history.state.toast;

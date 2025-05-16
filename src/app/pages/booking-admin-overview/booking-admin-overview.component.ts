@@ -39,8 +39,8 @@ export class BookingAdminOverviewComponent implements OnInit {
   }
 
   private loadBookings(showToast?: boolean) {
-    this.service.getAllBookings().subscribe((obj) => {
-      this.bookingData = obj;
+    this.service.getAllBookings().subscribe((bookings) => {
+      this.bookingData = bookings;
 
       if (showToast) {
         const toast = history.state.toast;

@@ -62,9 +62,9 @@ export class AirplaneDetailComponent implements OnInit {
         this.route.snapshot.paramMap.get('id') as string
       );
 
-      this.service.getAirplane(id).subscribe((obj) => {
-        this.airplane = obj;
-        this.objForm = this.formBuilder.group(obj);
+      this.service.getAirplane(id).subscribe((airplane) => {
+        this.airplane = airplane;
+        this.objForm = this.formBuilder.group(airplane);
         this.title = 'Edit Airplane';
         this.buttonLabel = 'Update';
       });

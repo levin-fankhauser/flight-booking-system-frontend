@@ -37,8 +37,8 @@ export class PassengerAdminOverviewComponent implements OnInit {
   }
 
   private loadPassengers(showToast?: boolean) {
-    this.service.getAllPassengers().subscribe((obj) => {
-      this.passengerData = obj;
+    this.service.getAllPassengers().subscribe((passengers) => {
+      this.passengerData = passengers;
 
       if (showToast) {
         const toast = history.state.toast;

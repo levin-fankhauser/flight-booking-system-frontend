@@ -69,8 +69,8 @@ export class FlightDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.airplaneService.getAllAirplanes().subscribe((obj) => {
-      this.airplanes = obj;
+    this.airplaneService.getAllAirplanes().subscribe((airplanes) => {
+      this.airplanes = airplanes;
     });
 
     if (this.route.snapshot.paramMap.get('id')) {
@@ -78,17 +78,17 @@ export class FlightDetailComponent implements OnInit {
         this.route.snapshot.paramMap.get('id') as string
       );
 
-      this.service.getFlight(id).subscribe((obj) => {
-        this.flight = obj;
+      this.service.getFlight(id).subscribe((flight) => {
+        this.flight = flight;
 
         this.objForm.patchValue({
-          origin: obj.origin,
-          destination: obj.destination,
-          airplane: obj.airplane.id,
-          departureDate: new Date(obj.departure),
-          departureTime: new Date(obj.departure),
-          arrivalDate: new Date(obj.arrival),
-          arrivalTime: new Date(obj.arrival),
+          origin: flight.origin,
+          destination: flight.destination,
+          airplane: flight.airplane.id,
+          departureDate: new Date(flight.departure),
+          departureTime: new Date(flight.departure),
+          arrivalDate: new Date(flight.arrival),
+          arrivalTime: new Date(flight.arrival),
         });
 
         this.title = 'Edit Flight';
