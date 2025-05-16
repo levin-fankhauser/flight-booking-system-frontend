@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { AirplaneService } from '../../service/airplane.service';
 import { AirplaneDetailComponent } from './airplane-detail.component';
 
-fdescribe('AirplaneDetailComponent', () => {
+describe('AirplaneDetailComponent', () => {
   let component: AirplaneDetailComponent;
   let fixture: ComponentFixture<AirplaneDetailComponent>;
   let airplaneServiceMock: any;
@@ -16,8 +16,6 @@ fdescribe('AirplaneDetailComponent', () => {
   const mockParamMap = {
     get: (key: string) => (key === 'id' ? '123' : null),
     has: (key: string) => key === 'id',
-    getAll: (key: string) => (key === 'id' ? ['123'] : []),
-    keys: ['id'],
   };
 
   beforeEach(async () => {

@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 import { Airplane } from '../data/airplane';
 import { AirplaneService } from './airplane.service';
 
-fdescribe('AirplaneService', () => {
+describe('AirplaneService', () => {
   let service: AirplaneService;
   let httpMock: HttpTestingController;
   const baseUrl = environment.backendBaseUrl + 'airplane';
